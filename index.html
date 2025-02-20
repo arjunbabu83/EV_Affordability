@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚗 EV Price Affordability Calculator 💰</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #00ffcc;
+        }
+        .container {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        label {
+            font-size: 18px;
+            color: yellow;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #00ffcc;
+            color: black;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ffcc00;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚗 EV Price Affordability Calculator 💰</h1>
+    <div class="container">
+        <label for="evPrice">🔋 EV Price ($):</label>
+        <input type="number" id="evPrice" placeholder="Enter EV price">
+
+        <label for="fuelPrice">⛽ Fuel Car Price ($):</label>
+        <input type="number" id="fuelPrice" placeholder="Enter fuel car price">
+
+        <label for="evCost">⚡ EV Running Cost ($/km):</label>
+        <input type="number" id="evCost" placeholder="Enter EV cost per km">
+
+        <label for="fuelCost">⛽ Fuel Running Cost ($/km):</label>
+        <input type="number" id="fuelCost" placeholder="Enter fuel cost per km">
+        
+        <button onclick="calculateCost()">📊 Compare Costs</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateCost() {
+            let evPrice = parseFloat(document.getElementById('evPrice').value);
+            let fuelPrice = parseFloat(document.getElementById('fuelPrice').value);
+            let evCost = parseFloat(document.getElementById('evCost').value);
+            let fuelCost = parseFloat(document.getElementById('fuelCost').value);
+            
+            let totalEvCost = evPrice + (evCost * 150000);
+            let totalFuelCost = fuelPrice + (fuelCost * 150000);
+            
+            let resultText = `<h2>🔍 Cost Comparison 📊</h2>`;
+            resultText += `<p>⚡ EV Total Cost: <b style='color:#00ffcc;'>$${totalEvCost.toLocaleString()}</b></p>`;
+            resultText += `<p>⛽ Fuel Car Total Cost: <b style='color:#ffcc00;'>$${totalFuelCost.toLocaleString()}</b></p>`;
+            
+            if (totalEvCost < totalFuelCost) {
+                resultText += `<p>✅ EV is more affordable in the long run! 🌱🚗</p>`;
+            } else {
+                resultText += `<p>❗ Fuel cars might cost less initially but are expensive over time! ⛽💸</p>`;
+            }
+            
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>
