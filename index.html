@@ -3,97 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚗 EV Price Affordability Calculator 💰</title>
+    <title>EV Price Affordability Calculator 🚗⚡</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: white;
+            font-family: 'Poppins', sans-serif;
+            background-color: #ADD8E6;
+            color: #333;
             text-align: center;
             padding: 20px;
         }
         h1 {
-            color: #00ffcc;
-        }
-        .container {
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            padding: 20px;
-            border-radius: 15px;
-            max-width: 500px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            color: #00509E;
+            font-size: 2.5em;
         }
         label {
-            font-size: 18px;
-            color: yellow;
+            font-size: 1.2em;
+            font-weight: bold;
         }
         input {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
+            padding: 10px;
+            margin: 10px;
+            font-size: 1.1em;
             border-radius: 5px;
-            border: none;
+            border: 1px solid #00509E;
         }
         button {
-            background-color: #00ffcc;
-            color: black;
+            background-color: #0078D7;
+            color: white;
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 1.2em;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #ffcc00;
+            background-color: #00509E;
         }
         #result {
+            font-size: 1.5em;
             margin-top: 20px;
-            font-size: 20px;
-            color: white;
+            font-weight: bold;
+            color: #D62828;
         }
     </style>
 </head>
 <body>
-    <h1>🚗 EV Price Affordability Calculator 💰</h1>
-    <div class="container">
-        <label for="evPrice">🔋 EV Price ($):</label>
-        <input type="number" id="evPrice" placeholder="Enter EV price">
-
-        <label for="fuelPrice">⛽ Fuel Car Price ($):</label>
-        <input type="number" id="fuelPrice" placeholder="Enter fuel car price">
-
-        <label for="evCost">⚡ EV Running Cost ($/km):</label>
-        <input type="number" id="evCost" placeholder="Enter EV cost per km">
-
-        <label for="fuelCost">⛽ Fuel Running Cost ($/km):</label>
-        <input type="number" id="fuelCost" placeholder="Enter fuel cost per km">
-        
-        <button onclick="calculateCost()">📊 Compare Costs</button>
-        
-        <div id="result"></div>
-    </div>
-
+    <h1>EV Price Affordability Calculator 💰📉</h1>
+    <p>Compare the costs of owning an EV vs. Petrol/Diesel car to see when you break even! 🔄⚡</p>
+    
+    <label for="evPrice">EV Price (₹): </label>
+    <input type="number" id="evPrice" placeholder="Enter EV price">
+    <br>
+    
+    <label for="icePrice">Petrol/Diesel Car Price (₹): </label>
+    <input type="number" id="icePrice" placeholder="Enter ICE price">
+    <br>
+    
+    <label for="fuelCost">Petrol/Diesel Cost per Liter (₹): </label>
+    <input type="number" id="fuelCost" placeholder="Fuel price per liter">
+    <br>
+    
+    <label for="electricityCost">Electricity Cost per kWh (₹): </label>
+    <input type="number" id="electricityCost" placeholder="Electricity cost per kWh">
+    <br>
+    
+    <label for="mileage">ICE Car Mileage (km per liter): </label>
+    <input type="number" id="mileage" placeholder="Mileage of ICE car">
+    <br>
+    
+    <label for="evEfficiency">EV Efficiency (km per kWh): </label>
+    <input type="number" id="evEfficiency" placeholder="EV efficiency">
+    <br>
+    
+    <label for="dailyCommute">Daily Commute Distance (km): </label>
+    <input type="number" id="dailyCommute" placeholder="Enter daily commute">
+    <br>
+    
+    <label for="years">Years of Operation: </label>
+    <input type="number" id="years" placeholder="Enter years of use">
+    <br>
+    
+    <button onclick="calculateBreakEven()">Calculate Break-Even 🔢</button>
+    
+    <p id="result"></p>
+    
     <script>
-        function calculateCost() {
-            let evPrice = parseFloat(document.getElementById('evPrice').value);
-            let fuelPrice = parseFloat(document.getElementById('fuelPrice').value);
-            let evCost = parseFloat(document.getElementById('evCost').value);
-            let fuelCost = parseFloat(document.getElementById('fuelCost').value);
+        function calculateBreakEven() {
+            let evPrice = parseFloat(document.getElementById('evPrice').value) || 0;
+            let icePrice = parseFloat(document.getElementById('icePrice').value) || 0;
+            let fuelCost = parseFloat(document.getElementById('fuelCost').value) || 0;
+            let electricityCost = parseFloat(document.getElementById('electricityCost').value) || 0;
+            let mileage = parseFloat(document.getElementById('mileage').value) || 1;
+            let evEfficiency = parseFloat(document.getElementById('evEfficiency').value) || 1;
+            let dailyCommute = parseFloat(document.getElementById('dailyCommute').value) || 0;
+            let years = parseFloat(document.getElementById('years').value) || 1;
             
-            let totalEvCost = evPrice + (evCost * 150000);
-            let totalFuelCost = fuelPrice + (fuelCost * 150000);
+            let annualDistance = dailyCommute * 365;
+            let iceFuelCost = (annualDistance / mileage) * fuelCost * years;
+            let evChargingCost = (annualDistance / evEfficiency) * electricityCost * years;
             
-            let resultText = `<h2>🔍 Cost Comparison 📊</h2>`;
-            resultText += `<p>⚡ EV Total Cost: <b style='color:#00ffcc;'>$${totalEvCost.toLocaleString()}</b></p>`;
-            resultText += `<p>⛽ Fuel Car Total Cost: <b style='color:#ffcc00;'>$${totalFuelCost.toLocaleString()}</b></p>`;
+            let totalIceCost = icePrice + iceFuelCost;
+            let totalEvCost = evPrice + evChargingCost;
             
-            if (totalEvCost < totalFuelCost) {
-                resultText += `<p>✅ EV is more affordable in the long run! 🌱🚗</p>`;
+            let breakEvenYears = ((evPrice - icePrice) / (iceFuelCost / years - evChargingCost / years)).toFixed(1);
+            
+            if (breakEvenYears > 0 && breakEvenYears <= years) {
+                document.getElementById('result').innerHTML = `Break-even achieved in ${breakEvenYears} years! 🎯`;
             } else {
-                resultText += `<p>❗ Fuel cars might cost less initially but are expensive over time! ⛽💸</p>`;
+                document.getElementById('result').innerHTML = `EV might not break even within the selected period! ⚖️`;
             }
-            
-            document.getElementById('result').innerHTML = resultText;
         }
     </script>
 </body>
